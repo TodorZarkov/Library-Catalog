@@ -12,6 +12,11 @@ const authEmptyUnValidPass = {
     email: "",
     pass: "123456"
 };
+const authEmptyPassValidUn = {
+    email: "peter@abv.bg",
+    pass: ""
+};
+const alertMessageRequiredFields = 'All fields are required!';
 
 async function authenticate(page, auth = auth1) {
     await page.goto(host + "/login");
@@ -94,7 +99,7 @@ test('Login with empty Credentials', async ({page}) => {
     
     page.on('dialog', async dialog => {
         expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain('All fields are required!');
+        expect(dialog.message()).toContain(alertMessageRequiredFields);
         await dialog.accept();
     });
     await page.$('a[href="/login"]');
@@ -106,7 +111,19 @@ test('Login with empty un and valid pass Credentials', async ({page}) => {
     
     page.on('dialog', async dialog => {
         expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain('All fields are required!');
+        expect(dialog.message()).toContain(alertMessageRequiredFields);
+        await dialog.accept();
+    });
+    await page.$('a[href="/login"]');
+    expect(page.url()).toBe(host + "/login");
+});
+
+test('Login with empty password and valid username Credentials', async ({page}) => {
+    await authenticate(page, authEmptyPassValidUn);
+    
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain('alert');
+        expect(dialog.message()).toContain(alertMessageRequiredFields);
         await dialog.accept();
     });
     await page.$('a[href="/login"]');
