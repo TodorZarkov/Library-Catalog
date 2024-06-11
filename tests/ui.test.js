@@ -5,6 +5,13 @@ const auth1 = {
     pass: "123456"
 };
 
+async function authenticate(page) {
+    await page.goto(host + "/login");
+    await page.fill('input[name="email"]', auth1.email);
+    await page.fill('input[name="password"]', auth1.pass);
+    await page.click('input[type="submit"]');
+}
+
 test('Verify "All Books" link is visible', async ({page}) => {
     await page.goto(host);
     await page.waitForSelector('nav.navbar');
@@ -33,10 +40,8 @@ test('Verify "Register" button is visible', async ({page}) => {
 });
 
 test('Verify "AllBooks" link is visible after user login', async ({page}) =>{
-    await page.goto(host + "/login");
-    await page.fill('input[name="email"]', auth1.email);
-    await page.fill('input[name="password"]', auth1.pass);
-    await page.click('input[type="submit"]');
+    
+    await authenticate(page);
 
     const allBooksLink = await page.$('a[href="/catalog"]');
     const isAllBooksLinkVisible = await allBooksLink.isVisible();
@@ -45,10 +50,7 @@ test('Verify "AllBooks" link is visible after user login', async ({page}) =>{
 });
 
 test('Verify "My Books" Link Is Visible after user login', async ({page}) => {
-    await page.goto(host + "/login");
-    await page.fill('input[name="email"]', auth1.email);
-    await page.fill('input[name="password"]', auth1.pass);
-    await page.click('input[type="submit"]');
+    await authenticate(page);
 
     const myBooksLink = await page.$('a[href="/profile"]');
     const isMyBooksLinkVisible = await myBooksLink.isVisible();
