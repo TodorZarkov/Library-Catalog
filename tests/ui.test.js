@@ -5,10 +5,10 @@ const auth1 = {
     pass: "123456"
 };
 
-async function authenticate(page) {
+async function authenticate(page, auth = auth1) {
     await page.goto(host + "/login");
-    await page.fill('input[name="email"]', auth1.email);
-    await page.fill('input[name="password"]', auth1.pass);
+    await page.fill('input[name="email"]', auth.email);
+    await page.fill('input[name="password"]', auth.pass);
     await page.click('input[type="submit"]');
 }
 
@@ -74,3 +74,9 @@ test('Verify User\'s Email Address Is Visible after user login', async ({page}) 
 
     await expect(greetingElement).toContainText(`${auth1.email}`);
 } );
+
+test('Login with Valid Credentials', async ({page}) => {
+    await authenticate(page, auth1);
+    await page.$('a[href="/catalog"]');
+    expect(page.url()).toBe(host + "/catalog");
+});
