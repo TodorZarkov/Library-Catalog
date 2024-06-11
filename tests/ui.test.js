@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const host = 'http://localhost:3000';
-const auth1 = {
+const authValid = {
     email: "peter@abv.bg",
     pass: "123456"
 };
@@ -16,12 +16,32 @@ const authEmptyPassValidUn = {
     email: "peter@abv.bg",
     pass: ""
 };
+
+const regDataValid = {
+    email: "stamat@abv.bg",
+    pass: "654321",
+    confirmPass: "654321"
+};
+const regDataEmpty = {
+    email: "",
+    pass: "",
+    confirmPass: ""
+};
+
 const alertMessageRequiredFields = 'All fields are required!';
 
-async function authenticate(page, auth = auth1) {
+async function authenticate(page, auth = authValid) {
     await page.goto(host + "/login");
     await page.fill('input[name="email"]', auth.email);
     await page.fill('input[name="password"]', auth.pass);
+    await page.click('input[type="submit"]');
+}
+
+async function register(page, regData = regDataValid) {
+    await page.goto(host + "/register");
+    await page.fill('input[name="email"]', regData.email);
+    await page.fill('input[name="password"]', regData.pass);
+    await page.fill('input[name="confirm-pass"]', regData.confirmPass)
     await page.click('input[type="submit"]');
 }
 
@@ -85,11 +105,11 @@ test('Verify User\'s Email Address Is Visible after user login', async ({page}) 
     const greetingElement = await page
     .locator("#user > span:nth-child(1)");
 
-    await expect(greetingElement).toContainText(`${auth1.email}`);
+    await expect(greetingElement).toContainText(`${authValid.email}`);
 } );
 
 test('Login with Valid Credentials', async ({page}) => {
-    await authenticate(page, auth1);
+    await authenticate(page, authValid);
     await page.$('a[href="/catalog"]');
     expect(page.url()).toBe(host + "/catalog");
 });
@@ -129,3 +149,10 @@ test('Login with empty password and valid username Credentials', async ({page}) 
     await page.$('a[href="/login"]');
     expect(page.url()).toBe(host + "/login");
 });
+
+test('Register with Valid data', async ({page}) => {
+    await register(page, regDataValid);
+    await page.$('a[href="/catalog"]');
+    expect(page.url()).toBe(host + "/catalog");
+});
+
