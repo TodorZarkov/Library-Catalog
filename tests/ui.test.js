@@ -65,3 +65,12 @@ test('Verify "Create Book" Link Is Visible after user login', async ({page}) => 
     const isVisible = await isElementVisible(page,'a[href="/create"]')
     expect(isVisible).toBe(true);
 } );
+
+test('Verify User\'s Email Address Is Visible after user login', async ({page}) => {
+    await authenticate(page);
+
+    const greetingElement = await page
+    .locator("#user > span:nth-child(1)");
+
+    await expect(greetingElement).toContainText(`${auth1.email}`);
+} );
