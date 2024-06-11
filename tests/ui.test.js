@@ -12,6 +12,15 @@ async function authenticate(page) {
     await page.click('input[type="submit"]');
 }
 
+async function isElementVisible(page, selector) {
+    const element = await page.$(selector);
+    const isElementVisible = await element.isVisible();
+
+    return isElementVisible
+}
+
+
+
 test('Verify "All Books" link is visible', async ({page}) => {
     await page.goto(host);
     await page.waitForSelector('nav.navbar');
@@ -40,20 +49,19 @@ test('Verify "Register" button is visible', async ({page}) => {
 });
 
 test('Verify "AllBooks" link is visible after user login', async ({page}) =>{
-    
     await authenticate(page);
-
-    const allBooksLink = await page.$('a[href="/catalog"]');
-    const isAllBooksLinkVisible = await allBooksLink.isVisible();
-
-    expect(isAllBooksLinkVisible).toBe(true);
+    const isVisible = await isElementVisible(page,'a[href="/catalog"]')
+    expect(isVisible).toBe(true);
 });
 
 test('Verify "My Books" Link Is Visible after user login', async ({page}) => {
     await authenticate(page);
+    const isVisible = await isElementVisible(page,'a[href="/profile"]')
+    expect(isVisible).toBe(true);
+} );
 
-    const myBooksLink = await page.$('a[href="/profile"]');
-    const isMyBooksLinkVisible = await myBooksLink.isVisible();
-
-    expect(isMyBooksLinkVisible).toBe(true);
+test('Verify "Create Book" Link Is Visible after user login', async ({page}) => {
+    await authenticate(page);
+    const isVisible = await isElementVisible(page,'a[href="/create"]')
+    expect(isVisible).toBe(true);
 } );
