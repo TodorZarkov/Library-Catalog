@@ -7,7 +7,11 @@ const auth1 = {
 const authEmpty = {
     email: "",
     pass: ""
-}
+};
+const authEmptyUnValidPass = {
+    email: "",
+    pass: "123456"
+};
 
 async function authenticate(page, auth = auth1) {
     await page.goto(host + "/login");
@@ -87,6 +91,18 @@ test('Login with Valid Credentials', async ({page}) => {
 
 test('Login with empty Credentials', async ({page}) => {
     await authenticate(page, authEmpty);
+    
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain('alert');
+        expect(dialog.message()).toContain('All fields are required!');
+        await dialog.accept();
+    });
+    await page.$('a[href="/login"]');
+    expect(page.url()).toBe(host + "/login");
+});
+
+test('Login with empty un and valid pass Credentials', async ({page}) => {
+    await authenticate(page, authEmptyUnValidPass);
     
     page.on('dialog', async dialog => {
         expect(dialog.type()).toContain('alert');
