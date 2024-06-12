@@ -156,3 +156,15 @@ test('Register with Valid data', async ({page}) => {
     expect(page.url()).toBe(host + "/catalog");
 });
 
+test('Register with Empty data', async ({page}) => {
+    await register(page, regDataEmpty);
+
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain('alert');
+        expect(dialog.message()).toContain(alertMessageRequiredFields);
+        await dialog.accept();
+    });
+    await page.$('a[href="/register"]');
+    expect(page.url()).toBe(host + "/register");
+});
+
