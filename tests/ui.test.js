@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+
 const host = 'http://localhost:3000';
 const authValid = {
     email: "peter@abv.bg",
@@ -37,8 +38,14 @@ const regEmptyPassValidEmail = {
     pass: "",
     confirmPass: ""
 };
+const regDifferentConfirmPassword = {
+    email: "asdfasfstamat@abv.bg",
+    pass: "654321",
+    confirmPass: "6544321"
+};
 
 const alertMessageRequiredFields = 'All fields are required!';
+const alertMessagePassesDontMatch = "Passwords don't match!";
 
 async function authenticate(page, auth = authValid) {
     await page.goto(host + "/login");
@@ -53,6 +60,7 @@ async function register(page, regData = regDataValid) {
     await page.fill('input[name="password"]', regData.pass);
     await page.fill('input[name="confirm-pass"]', regData.confirmPass)
     await page.click('input[type="submit"]');
+    return page;
 }
 
 async function isElementVisible(page, selector) {
@@ -136,24 +144,24 @@ test('Login with Valid Credentials', async ({page}) => {
 });
 
 test('Login with empty Credentials', async ({page}) => {
-    await authenticate(page, authEmpty);
     await validateDialog(page, 'alert');
+    await authenticate(page, authEmpty);
     await page.$('a[href="/login"]');
 
     expect(page.url()).toBe(host + "/login");
 });
 
 test('Login with empty un and valid pass Credentials', async ({page}) => {
-    await authenticate(page, authEmptyUnValidPass);
     await validateDialog(page, 'alert');
+    await authenticate(page, authEmptyUnValidPass);
     await page.$('a[href="/login"]');
 
     expect(page.url()).toBe(host + "/login");
 });
 
 test('Login with empty password and valid username Credentials', async ({page}) => {
-    await authenticate(page, authEmptyPassValidUn);
     await validateDialog(page, 'alert');
+    await authenticate(page, authEmptyPassValidUn);
     await page.$('a[href="/login"]');
 
     expect(page.url()).toBe(host + "/login");
@@ -166,24 +174,32 @@ test('Register with Valid data', async ({page}) => {
 });
 
 test('Register with Empty data', async ({page}) => {
-    await register(page, regDataEmpty);
     await validateDialog(page, 'alert');
+    await register(page, regDataEmpty);
     await page.$('a[href="/register"]');
 
     expect(page.url()).toBe(host + "/register");
 });
 
 test('Register with Empty email, and valid password', async ({page}) => {
-    await register(page, regEmptyEmailValidPass);
     await validateDialog(page, 'alert');
+    await register(page, regEmptyEmailValidPass);
     await page.$('a[href="/register"]');
 
     expect(page.url()).toBe(host + "/register");
 });
 
 test('Register with Empty password, and valid email', async ({page}) => {
-    await register(page, regEmptyPassValidEmail);
     await validateDialog(page, 'alert');
+    await register(page, regEmptyPassValidEmail);
+    await page.$('a[href="/register"]');
+
+    expect(page.url()).toBe(host + "/register");
+});
+
+test('Register with Valid email, password and different confirmPassword field', async ({page}) => {
+    await validateDialog(page, 'alert', alertMessagePassesDontMatch);
+    page = await register(page, regDifferentConfirmPassword);
     await page.$('a[href="/register"]');
 
     expect(page.url()).toBe(host + "/register");
