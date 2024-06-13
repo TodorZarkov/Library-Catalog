@@ -27,6 +27,11 @@ const regDataEmpty = {
     pass: "",
     confirmPass: ""
 };
+const regEmptyEmailValidPass = {
+    email: "",
+    pass: "654321",
+    confirmPass: "654321"
+};
 
 const alertMessageRequiredFields = 'All fields are required!';
 
@@ -50,6 +55,17 @@ async function isElementVisible(page, selector) {
     const isElementVisible = await element.isVisible();
 
     return isElementVisible
+}
+
+async function validateDialog(
+    page,
+    dialogType, 
+    dialogMsg = alertMessageRequiredFields) {
+    page.on('dialog', async dialog => {
+        expect(dialog.type()).toContain(dialogType);
+        expect(dialog.message()).toContain(dialogMsg);
+        await dialog.accept();
+    });
 }
 
 
@@ -164,6 +180,15 @@ test('Register with Empty data', async ({page}) => {
         expect(dialog.message()).toContain(alertMessageRequiredFields);
         await dialog.accept();
     });
+    await page.$('a[href="/register"]');
+    expect(page.url()).toBe(host + "/register");
+});
+
+test('Register with Empty email, and valid password', async ({page}) => {
+    await register(page, regEmptyEmailValidPass);
+
+    await validateDialog(page, 'alert');
+    
     await page.$('a[href="/register"]');
     expect(page.url()).toBe(host + "/register");
 });
