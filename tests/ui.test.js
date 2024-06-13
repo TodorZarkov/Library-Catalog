@@ -132,37 +132,25 @@ test('Login with Valid Credentials', async ({page}) => {
 
 test('Login with empty Credentials', async ({page}) => {
     await authenticate(page, authEmpty);
-    
-    page.on('dialog', async dialog => {
-        expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain(alertMessageRequiredFields);
-        await dialog.accept();
-    });
+    await validateDialog(page, 'alert');
     await page.$('a[href="/login"]');
+    
     expect(page.url()).toBe(host + "/login");
 });
 
 test('Login with empty un and valid pass Credentials', async ({page}) => {
     await authenticate(page, authEmptyUnValidPass);
-    
-    page.on('dialog', async dialog => {
-        expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain(alertMessageRequiredFields);
-        await dialog.accept();
-    });
+    await validateDialog(page, 'alert');
     await page.$('a[href="/login"]');
+
     expect(page.url()).toBe(host + "/login");
 });
 
 test('Login with empty password and valid username Credentials', async ({page}) => {
     await authenticate(page, authEmptyPassValidUn);
-    
-    page.on('dialog', async dialog => {
-        expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain(alertMessageRequiredFields);
-        await dialog.accept();
-    });
+    await validateDialog(page, 'alert');
     await page.$('a[href="/login"]');
+
     expect(page.url()).toBe(host + "/login");
 });
 
@@ -174,22 +162,17 @@ test('Register with Valid data', async ({page}) => {
 
 test('Register with Empty data', async ({page}) => {
     await register(page, regDataEmpty);
-
-    page.on('dialog', async dialog => {
-        expect(dialog.type()).toContain('alert');
-        expect(dialog.message()).toContain(alertMessageRequiredFields);
-        await dialog.accept();
-    });
+    await validateDialog(page, 'alert');
     await page.$('a[href="/register"]');
+
     expect(page.url()).toBe(host + "/register");
 });
 
 test('Register with Empty email, and valid password', async ({page}) => {
     await register(page, regEmptyEmailValidPass);
-
     await validateDialog(page, 'alert');
-    
     await page.$('a[href="/register"]');
+
     expect(page.url()).toBe(host + "/register");
 });
 
