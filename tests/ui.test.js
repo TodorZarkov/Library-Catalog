@@ -70,7 +70,7 @@ async function isElementVisible(page, selector) {
     return isElementVisible
 }
 
-async function validateDialog(
+export async function validateDialog(
     page,
     dialogType, 
     dialogMsg = alertMessageRequiredFields) {

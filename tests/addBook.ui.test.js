@@ -1,6 +1,6 @@
 const {test, expect} = require("@playwright/test")
 
-import {host, authenticate} from "../tests/ui.test";
+import {host, authenticate, validateDialog} from "../tests/ui.test";
 
 const correctBookData = {
     title: "CorrectTitle",
@@ -23,7 +23,7 @@ async function fillAndConfirmAddBookForm(page, addBookData = correctBookData){
     await page.selectOption("#type", addBookData.type);
     
     await page.click('#create-form input[type="submit"]');
-}
+};
 
 test("Add book with correct data", async ({page}) => {
     await authenticate(page);
@@ -38,3 +38,16 @@ test("Add book with correct data", async ({page}) => {
     expect(page.url()).toBe(host + "/catalog");
 });
 
+test("Add book with empty title field", async ({page}) => {
+    await authenticate(page);
+    await page.waitForURL(host + "/catalog");
+
+    await validateDialog(page, 'alert');
+
+    await page.click('a[href="/create"]');
+    await page.waitForSelector('#create-form');
+
+    await fillAndConfirmAddBookForm(page, addBookDataWithNoTitle);
+
+    expect(page.url()).toBe(host + "/create");
+});
