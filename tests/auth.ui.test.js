@@ -1,87 +1,22 @@
 const { test, expect } = require('@playwright/test');
 
-export const host = 'http://localhost:3000';
-const authValid = {
-    email: "peter@abv.bg",
-    pass: "123456"
-};
-const authEmpty = {
-    email: "",
-    pass: ""
-};
-const authEmptyUnValidPass = {
-    email: "",
-    pass: "123456"
-};
-const authEmptyPassValidUn = {
-    email: "peter@abv.bg",
-    pass: ""
-};
-
-const regDataValid = {
-    email: "stamat@abv.bg",
-    pass: "654321",
-    confirmPass: "654321"
-};
-const regDataEmpty = {
-    email: "",
-    pass: "",
-    confirmPass: ""
-};
-const regEmptyEmailValidPass = {
-    email: "",
-    pass: "654321",
-    confirmPass: "654321"
-};
-const regEmptyPassValidEmail = {
-    email: "lingomingo@abv.bg",
-    pass: "",
-    confirmPass: ""
-};
-const regDifferentConfirmPassword = {
-    email: "asdfasfstamat@abv.bg",
-    pass: "654321",
-    confirmPass: "6544321"
-};
-
-const alertMessageRequiredFields = 'All fields are required!';
-const alertMessagePassesDontMatch = "Passwords don't match!";
-
-export async function authenticate(page, auth = authValid) {
-    await page.goto(host + "/login");
-    await page.fill('input[name="email"]', auth.email);
-    await page.fill('input[name="password"]', auth.pass);
-    await page.click('input[type="submit"]');
-}
-
-async function register(page, regData = regDataValid) {
-    await page.goto(host + "/register");
-    await page.fill('input[name="email"]', regData.email);
-    await page.fill('input[name="password"]', regData.pass);
-    await page.fill('input[name="confirm-pass"]', regData.confirmPass)
-    await page.click('input[type="submit"]');
-    return page;
-}
-
-async function isElementVisible(page, selector) {
-    const element = await page.$(selector);
-    const isElementVisible = await element.isVisible();
-
-    return isElementVisible
-}
-
-export async function validateDialog(
-    page,
-    dialogType, 
-    dialogMsg = alertMessageRequiredFields) {
-    page.on('dialog', async dialog => {
-        expect(dialog.type()).toContain(dialogType);
-        expect(dialog.message()).toContain(dialogMsg);
-        await dialog.accept();
-    });
-}
-
-
+import {
+    host,
+    register,
+    isElementVisible,
+    authenticate, 
+    validateDialog,
+    authEmpty,
+    authEmptyPassValidUn,
+    authEmptyUnValidPass,
+    authValid,
+    regDataEmpty,
+    regDataValid,
+    regDifferentConfirmPassword,
+    regEmptyEmailValidPass,
+    regEmptyPassValidEmail,
+    alertMessagePassesDontMatch
+} from './common';
 
 test('Verify "All Books" link is visible', async ({page}) => {
     await page.goto(host);

@@ -1,43 +1,14 @@
 const {test, expect} = require("@playwright/test")
 
-import {host, authenticate, validateDialog} from "../tests/ui.test";
-
-const correctBookData = {
-    title: "CorrectTitle",
-    description: "CorrectDescription",
-    imageUrl: "https://cdn2.penguin.com.au/covers/original/9780451233264.jpg",
-    type: "Fiction"
-};
-
-const addBookDataWithNoTitle = {
-    title: "",
-    description: "CorrectDescription",
-    imageUrl: "https://cdn2.penguin.com.au/covers/original/9780451233264.jpg",
-    type: "Fiction"
-};
-
-const addBookDataWithNoDescription = {
-    title: "CorrectTitle",
-    description: "",
-    imageUrl: "https://cdn2.penguin.com.au/covers/original/9780451233264.jpg",
-    type: "Fiction"
-};
-
-const addBookDataWithNoImage = {
-    title: "CorrectTitle",
-    description: "CorrectDescription",
-    imageUrl: "",
-    type: "Fiction"
-};
-
-async function fillAndConfirmAddBookForm(page, addBookData = correctBookData){
-    await page.fill("#title", addBookData.title);
-    await page.fill("#description", addBookData.description);
-    await page.fill("#image", addBookData.imageUrl);
-    await page.selectOption("#type", addBookData.type);
-    
-    await page.click('#create-form input[type="submit"]');
-};
+import {
+    host, 
+    authenticate, 
+    validateDialog, 
+    fillAndConfirmAddBookForm,
+    addBookDataWithNoDescription,
+    addBookDataWithNoImage,
+    addBookDataWithNoTitle
+} from "./common";
 
 test("Add book with correct data", async ({page}) => {
     await authenticate(page);
