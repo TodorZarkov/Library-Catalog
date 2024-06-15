@@ -16,6 +16,20 @@ const addBookDataWithNoTitle = {
     type: "Fiction"
 };
 
+const addBookDataWithNoDescription = {
+    title: "CorrectTitle",
+    description: "",
+    imageUrl: "https://cdn2.penguin.com.au/covers/original/9780451233264.jpg",
+    type: "Fiction"
+};
+
+const addBookDataWithNoImage = {
+    title: "CorrectTitle",
+    description: "CorrectDescription",
+    imageUrl: "",
+    type: "Fiction"
+};
+
 async function fillAndConfirmAddBookForm(page, addBookData = correctBookData){
     await page.fill("#title", addBookData.title);
     await page.fill("#description", addBookData.description);
@@ -48,6 +62,34 @@ test("Add book with empty title field", async ({page}) => {
     await page.waitForSelector('#create-form');
 
     await fillAndConfirmAddBookForm(page, addBookDataWithNoTitle);
+
+    expect(page.url()).toBe(host + "/create");
+});
+
+test("Add book with empty description field", async ({page}) => {
+    await authenticate(page);
+    await page.waitForURL(host + "/catalog");
+
+    await validateDialog(page, 'alert');
+
+    await page.click('a[href="/create"]');
+    await page.waitForSelector('#create-form');
+
+    await fillAndConfirmAddBookForm(page, addBookDataWithNoDescription);
+
+    expect(page.url()).toBe(host + "/create");
+});
+
+test("Add book with empty image field", async ({page}) => {
+    await authenticate(page);
+    await page.waitForURL(host + "/catalog");
+
+    await validateDialog(page, 'alert');
+
+    await page.click('a[href="/create"]');
+    await page.waitForSelector('#create-form');
+
+    await fillAndConfirmAddBookForm(page, addBookDataWithNoImage);
 
     expect(page.url()).toBe(host + "/create");
 });
