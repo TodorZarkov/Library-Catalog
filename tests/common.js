@@ -7,6 +7,14 @@ export const authValid = {
     email: "peter@abv.bg",
     pass: "123456"
 };
+export const authPeter = {
+    email: "peter@abv.bg",
+    pass: "123456"
+};
+export const authJohn = {
+    email: "john@abv.bg",
+    pass: "123456"
+};
 export const authEmpty = {
     email: "",
     pass: ""
@@ -49,6 +57,8 @@ export const regDifferentConfirmPassword = {
 export const alertMessageRequiredFields = 'All fields are required!';
 
 export const alertMessagePassesDontMatch = "Passwords don't match!";
+
+export const messageWithNoBooksInDb = "No books in database!";
 
 export const correctBookData = {
     title: "CorrectTitle",
@@ -120,3 +130,27 @@ export async function isElementVisible(page, selector) {
 
     return isElementVisible
 };
+
+export async function deleteAllBooksByUser(page){
+    // await authenticate(page, authData);
+    // await page.waitForURL(host + "/catalog");
+
+    await page.waitForSelector(".dashboard");
+
+    await page.click('a[href="/profile"]');
+
+    const bookElements = await page.$$(".my-books-list li");
+    while (bookElements.length > 0) {
+        
+
+        const detailsBtn = page.$$("//a[text()='Details']")[0];
+        await detailsBtn.click();
+        const deleteBtn = page.$("//a[text()='Delete']");
+        await deleteBtn.click();
+        //playwright accepts automatically dialogs???!!!
+
+        await page.waitForSelector(".dashboard");
+        await page.click('a[href="/profile"]');
+        bookElements = await page.$$(".my-books-list li");
+    }
+}

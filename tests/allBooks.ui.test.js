@@ -1,6 +1,13 @@
 const {test, expect} = require("@playwright/test");
 
-import{host, authenticate} from "./common";
+import{
+    host, 
+    authenticate,
+    authJohn,
+    authPeter,
+    deleteAllBooksByUser,
+    messageWithNoBooksInDb
+} from "./common";
 
 test("Verify all books are displayed", async ({page}) => {
     await authenticate(page);
@@ -11,4 +18,8 @@ test("Verify all books are displayed", async ({page}) => {
     const bookElements = await page.$$('.other-books-list li');
 
     expect(bookElements.length).toBeGreaterThan(0);
+});
+
+test("Verify message when no books are present in db", async ({page}) => {
+
 });
