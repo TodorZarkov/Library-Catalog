@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const host = 'http://localhost:3000';
+export const host = 'http://localhost:3000';
 const authValid = {
     email: "peter@abv.bg",
     pass: "123456"
@@ -47,7 +47,7 @@ const regDifferentConfirmPassword = {
 const alertMessageRequiredFields = 'All fields are required!';
 const alertMessagePassesDontMatch = "Passwords don't match!";
 
-async function authenticate(page, auth = authValid) {
+export async function authenticate(page, auth = authValid) {
     await page.goto(host + "/login");
     await page.fill('input[name="email"]', auth.email);
     await page.fill('input[name="password"]', auth.pass);
