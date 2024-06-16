@@ -8,7 +8,7 @@ import{
     booksOfJohn,
     booksOfPeter,
     deleteAllBooksByUser,
-    addBooksBuUser,
+    addBooksByUser,
     messageWithNoBooksInDb
 } from "./common";
 
@@ -40,5 +40,7 @@ test("Verify message when no books are present in db", async ({page}) => {
 
     //to return the db state for the predefined testing users
 
-
+    await addBooksByUser(page, booksOfJohn);
+    await authenticate(page, authPeter);
+    await addBooksByUser(page, booksOfPeter);
 });
