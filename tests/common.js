@@ -186,3 +186,16 @@ export async function addBooksByUser(page, books) {
     }
 
 };
+
+export async function logout(page) {
+    await page.click('#logoutBtn');
+}
+
+export async function navigateToDetailsOfFirstBook(page){
+    await page.click('a[href="/catalog"]');
+    await page.waitForURL(host + "/catalog");
+
+    await page.waitForSelector('.otherBooks');
+    await page.click('.otherBooks a.button');
+    await page.waitForSelector('.details');
+}
