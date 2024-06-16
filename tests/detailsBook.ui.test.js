@@ -141,3 +141,25 @@ test("Verify If Edit and Delete Buttons Are Not Visible for Non-Creator", async 
     await authenticate(page, authPeter);
     await addBooksByUser(page, booksOfPeter);
 });
+
+test("Verify If Like Button Is Not Visible for Creator", async ({page}) => {
+    await authenticate(page, authPeter);
+    await deleteAllBooksByUser(page);
+
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+
+    await addBooksByUser(page, [correctBookData]);
+  
+    await navigateToDetailsOfFirstBook(page);
+//-------------
+
+    await expect(page.locator("//a[text()='Like']")).not.toBeVisible;
+
+
+    //Back to previous db state:
+
+    await addBooksByUser(page, booksOfJohn);
+    await authenticate(page, authPeter);
+    await addBooksByUser(page, booksOfPeter);
+});
