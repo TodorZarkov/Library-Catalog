@@ -10,7 +10,8 @@ import {
     correctBookData,
     booksOfJohn,
     booksOfPeter,
-    logout
+    logout,
+    navigateToDetailsOfFirstBook
 } from './common';
 
 test ("Verify Details button works correctly for loged in user", async ({page}) => {
@@ -21,14 +22,9 @@ test ("Verify Details button works correctly for loged in user", async ({page}) 
     await deleteAllBooksByUser(page);
 
     await addBooksByUser(page, [correctBookData]);
-//-----
-    await page.click('a[href="/catalog"]');
-    await page.waitForURL(host + "/catalog");
+  
+    await navigateToDetailsOfFirstBook(page);
 
-    await page.waitForSelector('.otherBooks');
-    await page.click('.otherBooks a.button');
-    await page.waitForSelector('.details');
-//-----
     const detailsPageTitle = await page.textContent('.book-information h3');
     expect(detailsPageTitle).toBe(correctBookData.title);
 
@@ -48,14 +44,9 @@ test ("Verify Guest User Sees Details Button and Button Works Correctly", async 
 
     await addBooksByUser(page, [correctBookData]);
     await logout(page);
-//------
-    await page.click('a[href="/catalog"]');
-    await page.waitForURL(host + "/catalog");
 
-    await page.waitForSelector('.otherBooks');
-    await page.click('.otherBooks a.button');
-    await page.waitForSelector('.details');
-//-------
+    await navigateToDetailsOfFirstBook(page);
+
     const detailsPageTitle = await page.textContent('.book-information h3');
     expect(detailsPageTitle).toBe(correctBookData.title);
 
@@ -66,3 +57,6 @@ test ("Verify Guest User Sees Details Button and Button Works Correctly", async 
     await authenticate(page, authPeter);
     await addBooksByUser(page, booksOfPeter);
 });
+
+
+
