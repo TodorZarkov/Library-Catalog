@@ -5,7 +5,10 @@ import{
     authenticate,
     authJohn,
     authPeter,
+    booksOfJohn,
+    booksOfPeter,
     deleteAllBooksByUser,
+    addBooksBuUser,
     messageWithNoBooksInDb
 } from "./common";
 
@@ -33,4 +36,9 @@ test("Verify message when no books are present in db", async ({page}) => {
     const noBooksElement = await page.locator(".no-books");
 
     expect(noBooksElement).toContainText(`${messageWithNoBooksInDb}`);
+
+
+    //to return the db state for the predefined testing users
+
+
 });

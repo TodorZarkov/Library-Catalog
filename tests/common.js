@@ -67,6 +67,30 @@ export const correctBookData = {
     type: "Fiction"
 };
 
+export const booksOfJohn = [
+    {
+        title: "To Kill a Mockingbird",
+        description: 'The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it. "To Kill A Mockingbird" became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.',
+        imageUrl: "/images/book3.png",
+        type: "Classic"
+    }
+];
+
+export const booksOfPeter = [
+    {
+        title: "Outlander",
+        description: 'The year is 1945. Claire Randall, a former combat nurse, is just back from the war and reunited with her husband on a second honeymoon when she walks through a standing stone in one of the ancient circles that dot the British Isles. Suddenly she is a Sassenach—an “outlander”—in a Scotland torn by war and raiding border clans in the year of Our Lord...1743.',
+        imageUrl: "/images/book2.png",
+        type: "Other"
+    },
+    {
+        title: "A Court of Thorns and Roses",
+        description: "Feyre's survival rests upon her ability to hunt and kill – the forest where she lives is a cold, bleak place in the long winter months. So when she spots a deer in the forest being pursued by a wolf, she cannot resist fighting it for the flesh. But to do so, she must kill the predator and killing something so precious comes at a price ...",
+        imageUrl: "/images/book1.png",
+        type: "Fiction"
+    }
+];
+
 export const addBookDataWithNoTitle = {
     title: "",
     description: "CorrectDescription",
