@@ -112,3 +112,32 @@ test("Verify If Edit and Delete Buttons Are Visible for Creator", async ({page})
     await authenticate(page, authPeter);
     await addBooksByUser(page, booksOfPeter);
 });
+
+test("Verify If Edit and Delete Buttons Are Not Visible for Non-Creator", async ({page}) => {
+    await authenticate(page, authPeter);
+    await deleteAllBooksByUser(page);
+
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+
+    await addBooksByUser(page, [correctBookData]);
+
+    await authenticate(page, authPeter)
+  
+    await navigateToDetailsOfFirstBook(page);
+
+    
+//-------------
+
+    await expect(page.locator("//a[text()='Delete']")).not.toBeVisible;
+    await expect(page.locator("//a[text()='Edit']")).not.toBeVisible;
+
+
+    //Back to previous db state:
+
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+    await addBooksByUser(page, booksOfJohn);
+    await authenticate(page, authPeter);
+    await addBooksByUser(page, booksOfPeter);
+});
