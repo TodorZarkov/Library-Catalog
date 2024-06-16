@@ -132,25 +132,22 @@ export async function isElementVisible(page, selector) {
 };
 
 export async function deleteAllBooksByUser(page){
-    // await authenticate(page, authData);
-    // await page.waitForURL(host + "/catalog");
-
+    
     await page.waitForSelector(".dashboard");
 
     await page.click('a[href="/profile"]');
-
-    const bookElements = await page.$$(".my-books-list li");
+    let bookElements = await page.$$(".my-books-list li");
     while (bookElements.length > 0) {
-        
+        await page.click("//a[text()='Details']");
 
-        const detailsBtn = page.$$("//a[text()='Details']")[0];
-        await detailsBtn.click();
-        const deleteBtn = page.$("//a[text()='Delete']");
-        await deleteBtn.click();
-        //playwright accepts automatically dialogs???!!!
+        page.once('dialog', async dialog => {
+            dialog.accept();
+        });
 
-        await page.waitForSelector(".dashboard");
+        await page.click("//a[text()='Delete']");
+
         await page.click('a[href="/profile"]');
+        await page.waitForSelector("#my-books-page");
         bookElements = await page.$$(".my-books-list li");
     }
 }

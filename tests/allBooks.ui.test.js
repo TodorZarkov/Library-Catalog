@@ -21,5 +21,16 @@ test("Verify all books are displayed", async ({page}) => {
 });
 
 test("Verify message when no books are present in db", async ({page}) => {
+    await authenticate(page, authPeter);
+    await deleteAllBooksByUser(page);
 
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+
+    await page.goto(host + "/catalog");
+
+    await page.waitForSelector(".dashboard");
+    const noBooksElement = await page.locator(".no-books");
+
+    expect(noBooksElement).toContainText(`${messageWithNoBooksInDb}`);
 });
