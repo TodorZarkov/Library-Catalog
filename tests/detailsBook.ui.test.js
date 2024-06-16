@@ -68,7 +68,7 @@ test("Verify That All Details Info Is Displayed Correctly", async ({page}) => {
     await addBooksByUser(page, [correctBookData]);
   
     await navigateToDetailsOfFirstBook(page);
-
+//--------
     const detailsPageTitle = await page.textContent('.book-information h3');
     expect(detailsPageTitle).toBe(correctBookData.title);
 
@@ -81,6 +81,7 @@ test("Verify That All Details Info Is Displayed Correctly", async ({page}) => {
     const detailsPageDetails = 
     await page.textContent('.book-description p');
     expect(detailsPageDetails).toBe(correctBookData.description);
+//----------
 
     //Back to previous db state:
 
@@ -89,3 +90,25 @@ test("Verify That All Details Info Is Displayed Correctly", async ({page}) => {
     await addBooksByUser(page, booksOfPeter);
 });
 
+test("Verify If Edit and Delete Buttons Are Visible for Creator", async ({page}) => {
+    await authenticate(page, authPeter);
+    await deleteAllBooksByUser(page);
+
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+
+    await addBooksByUser(page, [correctBookData]);
+  
+    await navigateToDetailsOfFirstBook(page);
+//-------------
+
+    await expect(page.locator("//a[text()='Delete']")).toBeVisible;
+    await expect(page.locator("//a[text()='Edit']")).toBeVisible;
+
+
+    //Back to previous db state:
+
+    await addBooksByUser(page, booksOfJohn);
+    await authenticate(page, authPeter);
+    await addBooksByUser(page, booksOfPeter);
+});
