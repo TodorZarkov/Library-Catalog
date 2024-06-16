@@ -186,3 +186,7 @@ export async function addBooksByUser(page, books) {
     }
 
 };
+
+export async function logout(page) {
+    await page.click('#logoutBtn');
+}

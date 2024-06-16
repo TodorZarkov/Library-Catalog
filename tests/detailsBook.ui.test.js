@@ -9,7 +9,8 @@ import {
     addBooksByUser,
     correctBookData,
     booksOfJohn,
-    booksOfPeter
+    booksOfPeter,
+    logout
 } from './common';
 
 test ("Verify Details button works correctly for loged in user", async ({page}) => {
@@ -20,19 +21,47 @@ test ("Verify Details button works correctly for loged in user", async ({page}) 
     await deleteAllBooksByUser(page);
 
     await addBooksByUser(page, [correctBookData]);
-
+//-----
     await page.click('a[href="/catalog"]');
     await page.waitForURL(host + "/catalog");
 
     await page.waitForSelector('.otherBooks');
     await page.click('.otherBooks a.button');
     await page.waitForSelector('.details');
-
+//-----
     const detailsPageTitle = await page.textContent('.book-information h3');
     expect(detailsPageTitle).toBe(correctBookData.title);
 
     //Back to previous db state:
 
+    await addBooksByUser(page, booksOfJohn);
+    await authenticate(page, authPeter);
+    await addBooksByUser(page, booksOfPeter);
+});
+
+test ("Verify Guest User Sees Details Button and Button Works Correctly", async ({page}) => {
+    await authenticate(page, authPeter);
+    await deleteAllBooksByUser(page);
+
+    await authenticate(page, authJohn);
+    await deleteAllBooksByUser(page);
+
+    await addBooksByUser(page, [correctBookData]);
+    await logout(page);
+//------
+    await page.click('a[href="/catalog"]');
+    await page.waitForURL(host + "/catalog");
+
+    await page.waitForSelector('.otherBooks');
+    await page.click('.otherBooks a.button');
+    await page.waitForSelector('.details');
+//-------
+    const detailsPageTitle = await page.textContent('.book-information h3');
+    expect(detailsPageTitle).toBe(correctBookData.title);
+
+    //Back to previous db state:
+
+    await authenticate(page, authJohn);
     await addBooksByUser(page, booksOfJohn);
     await authenticate(page, authPeter);
     await addBooksByUser(page, booksOfPeter);
