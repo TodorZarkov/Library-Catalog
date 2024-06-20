@@ -17,8 +17,8 @@
     "devDependencies": {
         "@playwright/test": "^1.44.1",
         "chai": "4.3.4",
-        "http-server": "0.12.3",
-        "mocha": "8.3.2",
+        "http-server": "^14.1.1",
+        "mocha": "^10.4.0",
         "playwright-chromium": "1.9.2"
     }
 }
