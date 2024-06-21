@@ -22,9 +22,9 @@ jobs:
   - name: Start Audit script
     run: npm run test-npm-sec
 
- unit-tests:
+ api-tests:
   runs-on: ubuntu-latest
-
+  needs: npm-security-tests
   steps:
   - name: Copy the repo
     uses: actions/checkout@v4
@@ -36,6 +36,6 @@ jobs:
   - name: Install deps.
     run: npm install
   - name: Run the backend
-    run: npm start-be
-  - name: Unit tests
-    run: npm run test-be
+    run: npm run start-be
+  - name: API testing
+    run: npm run test-api
