@@ -6,6 +6,7 @@
     "scripts": {
         "test-npm-sec": "npm audit",
         "test-ui": "npx playwright test",
+        "test-api": "npx mocha ./tests/api.test.js",
         "start-fe": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1",
         "start-be": "node ./server/server.js"
     },
@@ -16,10 +17,13 @@
         "page": "^1.11.6"
     },
     "devDependencies": {
-        "@playwright/test": "^1.44.1",
-        "chai": "4.3.4",
-        "http-server": "^14.1.1",
+        "express": "^4.19.2",
+        "body-parser": "^1.20.2",
         "mocha": "^10.4.0",
+        "chai": "^4.4.0",
+        "chai-http": "^4.4.0",
+        "@playwright/test": "^1.44.1",
+        "http-server": "^14.1.1",
         "playwright-chromium": "1.9.2"
     }
 }
