@@ -22,6 +22,18 @@ jobs:
   - name: Start Audit script
     run: npm run test-npm-sec
 
+ deploy-api:
+     runs-on: ubuntu-latest
+     if: github.ref == 'refs/heads/main'
+     needs: npm-security-tests
+     steps:
+       - name: Deploy to testing
+         uses: johnbeynon/render-deploy-action@v0.0.8
+         with:
+           service-id: ${{ secrets.LIB_CAT_TESTING_RENDER_SERVICE_ID }}
+           api-key: ${{ secrets.LIB_CAT_TESTING_RENDER_API_KEY }}
+
+
  api-tests:
   runs-on: ubuntu-latest
   needs: npm-security-tests
