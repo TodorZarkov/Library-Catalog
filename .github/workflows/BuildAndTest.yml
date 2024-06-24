@@ -31,3 +31,19 @@ jobs:
          with:
            service-id: ${{ secrets.LIB_CAT_SERVER_TESTING_RENDER_SERVICE_ID }}
            render-token: ${{ secrets.LIB_CAT_SERVER_TESTING_RENDER_API_KEY }}
+
+ api-tests:
+  runs-on: ubuntu-latest
+  needs: deploy-api-in-testing
+  steps:
+  - name: Copy the repo
+    uses: actions/checkout@v4
+  - name: Use Node.js 20.x
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20.x
+      cache: 'npm'
+  - name: Install deps.
+    run: npm install
+  - name: API testing
+    run: npm run test-api-remote
