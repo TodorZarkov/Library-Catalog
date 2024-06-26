@@ -1,7 +1,10 @@
 const {test, expect} = require("@playwright/test")
 
 
-export const host = 'http://localhost:3000';
+export let host = 'http://localhost:3000';
+if(process.env.TESTING_HOST){
+    host = process.env.TESTING_HOST;
+}
 
 export const authValid = {
     email: "peter@abv.bg",
