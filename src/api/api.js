@@ -1,4 +1,4 @@
-export const settings = {
+export let settings = {
     host: '',
 };
 
