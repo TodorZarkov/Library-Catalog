@@ -7,6 +7,7 @@
         "test-npm-sec": "npm audit",
         "test-ui": "npx playwright test",
         "test-api": "npx mocha ./tests/api.test.js",
+        "test-api-remote": "cross-env TESTING_HOST=https://library-catalog-api-tz.onrender.com npx mocha ./tests/api.test.js",
         "start-fe": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1",
         "start-be": "node ./server/server.js"
     },
@@ -24,6 +25,7 @@
         "chai-http": "^4.4.0",
         "@playwright/test": "^1.44.1",
         "http-server": "^14.1.1",
-        "playwright-chromium": "1.9.2"
+        "playwright-chromium": "1.9.2",
+        "cross-env": "7.0.3"
     }
 }

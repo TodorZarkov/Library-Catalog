@@ -1,6 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = "http://localhost:3030" //require('../server/server');
+let server = "http://localhost:3030" //require('../server/server');
+if(process.env.TESTING_HOST){
+    server = process.env.TESTING_HOST;
+}
 const expect = chai.expect;
 
 chai.use(chaiHttp);
