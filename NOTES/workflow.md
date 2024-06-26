@@ -11,7 +11,8 @@
 
   -- as static page
 
-  -- must read the api host from environment variable 
+  -- must read the api host before serving the js!!! It will not do with env. variable. 
+  -- I will change it statically for now.
 
 5 ui testing
 
