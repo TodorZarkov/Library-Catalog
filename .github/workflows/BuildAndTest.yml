@@ -69,5 +69,7 @@ jobs:
        cache: 'npm'
    - name: Install deps.
      run: npm install
+   - name: Install browsers
+     run: npx playwright install
    - name: UI testing
      run: npm run test-ui-remote

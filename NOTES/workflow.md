@@ -2,19 +2,21 @@
 
 
 2 deploy api(server) to testing environment
--- how to change the host automatically when change environments?
-        - process.env.VARIABLE_NAME
+
 
 3 api tests
+
 
 4 deploy fe to testing environment 
 
   -- as static page
 
   -- must read the api host before serving the js!!! It will not do with env. variable. 
-  -- I will change it statically for now.
+  -- the solution is to run script that changes a config.js file containing the api host
 
-5 ui testing
+5 testing
+5.1 run task installing browsers
+5.2 ui testing
 
   -- read the host from script on test starting
 

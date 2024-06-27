@@ -1,13 +1,13 @@
 const {test, expect} = require("@playwright/test")
 
 
-//export const host = 'http://localhost:3000';
-export const host = 'https://library-catalog-tz.onrender.com';
+let host = 'http://localhost:3000';
 
-// if(process.env.TESTING_HOST){
-//     host = process.env.TESTING_HOST;
-// }
+if(process.env.TESTING_HOST){
+    host = process.env.TESTING_HOST;
+}
 
+export {host};
 export const authValid = {
     email: "peter@abv.bg",
     pass: "123456"
