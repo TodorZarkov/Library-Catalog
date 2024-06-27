@@ -48,10 +48,26 @@ jobs:
 
  deploy-fe-in-testing:
      runs-on: ubuntu-latest
-     needs: api-tests
+     needs: npm-security-tests
      steps:
        - name: Deploy to testing
          uses: halfdomelabs/render-deploy@v0.1.2
          with:
            service-id: ${{ secrets.LIB_CAT_FE_TESTING_RENDER_SERVICE_ID }}
            render-token: ${{ secrets.LIB_CAT_FE_TESTING_RENDER_API_KEY }}
+
+ ui-tests:
+   runs-on: ubuntu-latest
+   needs: deploy-api-in-testing
+   steps:
+   - name: Copy the repo
+     uses: actions/checkout@v4
+   - name: Use Node.js 20.x
+     uses: actions/setup-node@v4
+     with:
+       node-version: 20.x
+       cache: 'npm'
+   - name: Install deps.
+     run: npm install
+   - name: UI testing
+     run: npm run test-ui-remote

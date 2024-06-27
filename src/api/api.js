@@ -1,5 +1,5 @@
 export let settings = {
-    host: '',
+    host: 'https://library-catalog-api-tz.onrender.com',
 };
 
 async function request(url, options) {

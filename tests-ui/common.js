@@ -1,7 +1,12 @@
 const {test, expect} = require("@playwright/test")
 
 
-export const host = 'http://localhost:3000';
+//export const host = 'http://localhost:3000';
+export const host = 'https://library-catalog-tz.onrender.com';
+
+// if(process.env.TESTING_HOST){
+//     host = process.env.TESTING_HOST;
+// }
 
 export const authValid = {
     email: "peter@abv.bg",
@@ -134,6 +139,7 @@ export async function validateDialog(
 
 export async function authenticate(page, auth = authValid) {
     await page.goto(host + "/login");
+    await page.waitForURL(host + "/login")
     await page.fill('input[name="email"]', auth.email);
     await page.fill('input[name="password"]', auth.pass);
     await page.click('input[type="submit"]');
