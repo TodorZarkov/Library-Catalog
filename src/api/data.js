@@ -3,13 +3,10 @@ import * as api from './api.js';
 let host = 'https://library-catalog-api-tz.onrender.com'
 api.settings.host = 'https://library-catalog-api-tz.onrender.com';
 
-// if(process.env.DEV_ENV){
-//     host = 'http://localhost:3030';
-//     api.settings.host = 'http://localhost:3030';
-// } else {
-//     host = 'https://library-catalog-api-tz.onrender.com'
-//     api.settings.host = 'https://library-catalog-api-tz.onrender.com';
-// }
+
+//host = 'http://localhost:3030';
+//api.settings.host = 'http://localhost:3030';
+
 
 export const login = api.login;
 export const register = api.register;

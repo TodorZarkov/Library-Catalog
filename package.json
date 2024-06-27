@@ -5,8 +5,8 @@
     "main": "index.html",
     "scripts": {
         "test-npm-sec": "npm audit",
-        "test-ui": "npx playwright test --ui ./tests-ui --workers 5",
-        "test-ui-remote": "cross-env TESTING_HOST=https://library-catalog-tz.onrender.com npx playwright test ./tests-ui --workers 5",
+        "test-ui": "npx playwright test ./tests-ui --workers 1",
+        "test-ui-remote": "cross-env TESTING_HOST=https://library-catalog-tz.onrender.com npx playwright test ./tests-ui --workers 1",
         "test-api": "npx mocha ./tests-api/api.test.js",
         "test-api-remote": "cross-env TESTING_HOST=https://library-catalog-api-tz.onrender.com npx mocha ./tests-api/api.test.js",
         "start-fe-dev": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1",
