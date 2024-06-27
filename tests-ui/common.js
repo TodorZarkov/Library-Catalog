@@ -139,6 +139,7 @@ export async function validateDialog(
 
 export async function authenticate(page, auth = authValid) {
     await page.goto(host + "/login");
+    await page.waitForURL(host + "/login")
     await page.fill('input[name="email"]', auth.email);
     await page.fill('input[name="password"]', auth.pass);
     await page.click('input[type="submit"]');

@@ -1,10 +1,10 @@
 import * as api from './api.js';
 
-let host = 'https://library-catalog-api-tz.onrender.com'
-api.settings.host = 'https://library-catalog-api-tz.onrender.com';
+const host = api.settings.host;
 
 
-//host = 'http://localhost:3030';
+
+//const host = 'http://localhost:3030';
 //api.settings.host = 'http://localhost:3030';
 
 
