@@ -57,7 +57,7 @@ jobs:
            render-token: ${{ secrets.LIB_CAT_FE_TESTING_RENDER_API_KEY }}
 
  ui-tests:
-   runs-on: windows-latest
+   runs-on: ubuntu-latest
    needs: deploy-api-in-testing
    steps:
    - name: Copy the repo
