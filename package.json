@@ -13,7 +13,7 @@
         "start-be": "node ./server/server.js",
 
         
-        "start-fe-remote": "echo  export const apiHost = \"https://library-catalog-api-tz.onrender.com\"  > config.js" ,
+        "start-fe-remote": "echo  export const apiHost = 'https://library-catalog-api-tz.onrender.com'  > config.js" ,
         
         "test-api": "npx mocha ./tests-api/api.test.js",
 
@@ -22,7 +22,7 @@
 
 
 
-        "test-ui-remote": "npx playwright test ./tests-ui --workers 1"
+        "test-ui-remote": "cross-env TESTING_HOST=https://library-catalog-tz.onrender.com npx playwright test ./tests-ui --workers 1"
 
 
 
