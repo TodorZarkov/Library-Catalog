@@ -22,7 +22,7 @@
 
 
 
-        "test-ui-remote": "cross-env TESTING_HOST=https://library-catalog-tz.onrender.com npx playwright test ./tests-ui --workers 1"
+        "test-ui-remote": "npx playwright test ./tests-ui --workers 1"
 
 
 

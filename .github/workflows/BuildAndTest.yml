@@ -71,5 +71,7 @@ jobs:
      run: npm install
    - name: Install browsers
      run: npx playwright install
+   - name: Add host variable
+     run: TESTING_HOST=https://library-catalog-tz.onrender.com
    - name: UI testing
      run: npm run test-ui-remote
