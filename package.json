@@ -13,7 +13,7 @@
         "start-be": "node ./server/server.js",
 
         
-        "start-fe-remote": "echo  export const apiHost = 'https://library-catalog-api-tz.onrender.com'  > config.js" ,
+        "start-fe-remote": "echo export const apiHost = \"https://library-catalog-api-tz.onrender.com\" > config.js" ,
         
         "test-api": "npx mocha ./tests-api/api.test.js",
 
