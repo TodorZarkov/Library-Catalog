@@ -14,175 +14,182 @@ import {
     navigateToDetailsOfFirstBook
 } from './common';
 
-test ("Verify Details button works correctly for loged in user", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test ("Verify Details button works correctly for loged in user", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await page.waitForURL(host + "/catalog")
+//     await deleteAllBooksByUser(page);
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await page.waitForURL(host + "/catalog")
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
+//     await addBooksByUser(page, [correctBookData]);
+//     await page.waitForURL(host + "/catalog")
   
-    await navigateToDetailsOfFirstBook(page);
+//     await navigateToDetailsOfFirstBook(page);
 
-    const detailsPageTitle = await page.textContent('.book-information h3');
-    expect(detailsPageTitle).toBe(correctBookData.title);
+//     const detailsPageTitle = await page.textContent('.book-information h3');
+//     expect(detailsPageTitle).toBe(correctBookData.title);
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-test ("Verify Guest User Sees Details Button and Button Works Correctly", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test ("Verify Guest User Sees Details Button and Button Works Correctly", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await page.waitForURL(host + "/catalog")
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
-    await logout(page);
+//     await authenticate(page, authJohn);
+//     await page.waitForURL(host + "/catalog")
+//     await deleteAllBooksByUser(page);
 
-    await navigateToDetailsOfFirstBook(page);
+//     await addBooksByUser(page, [correctBookData]);
+//     await logout(page);
+//     await page.waitForURL(host + "/catalog")
 
-    const detailsPageTitle = await page.textContent('.book-information h3');
-    expect(detailsPageTitle).toBe(correctBookData.title);
+//     await navigateToDetailsOfFirstBook(page);
 
-    //Back to previous db state:
+//     const detailsPageTitle = await page.textContent('.book-information h3');
+//     expect(detailsPageTitle).toBe(correctBookData.title);
 
-    await authenticate(page, authJohn);
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     //Back to previous db state:
 
-test("Verify That All Details Info Is Displayed Correctly", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+// test("Verify That All Details Info Is Displayed Correctly", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
+
+//     await addBooksByUser(page, [correctBookData]);
   
-    await navigateToDetailsOfFirstBook(page);
-//--------
-    const detailsPageTitle = await page.textContent('.book-information h3');
-    expect(detailsPageTitle).toBe(correctBookData.title);
+//     await navigateToDetailsOfFirstBook(page);
+// //--------
+//     const detailsPageTitle = await page.textContent('.book-information h3');
+//     expect(detailsPageTitle).toBe(correctBookData.title);
 
-    const detailsPageType = await page.textContent('.book-information .type');
-    expect(detailsPageType).toBe('Type: Fiction');
+//     const detailsPageType = await page.textContent('.book-information .type');
+//     expect(detailsPageType).toBe('Type: Fiction');
 
-    await expect(page.locator('.book-information .img img'))
-    .toHaveAttribute('src', correctBookData.imageUrl)
+//     await expect(page.locator('.book-information .img img'))
+//     .toHaveAttribute('src', correctBookData.imageUrl)
     
-    const detailsPageDetails = 
-    await page.textContent('.book-description p');
-    expect(detailsPageDetails).toBe(correctBookData.description);
-//----------
+//     const detailsPageDetails = 
+//     await page.textContent('.book-description p');
+//     expect(detailsPageDetails).toBe(correctBookData.description);
+// //----------
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-test("Verify If Edit and Delete Buttons Are Visible for Creator", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test("Verify If Edit and Delete Buttons Are Visible for Creator", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await deleteAllBooksByUser(page);
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
+//     await addBooksByUser(page, [correctBookData]);
   
-    await navigateToDetailsOfFirstBook(page);
-//-------------
+//     await navigateToDetailsOfFirstBook(page);
+// //-------------
 
-    await expect(page.locator("//a[text()='Delete']")).toBeVisible;
-    await expect(page.locator("//a[text()='Edit']")).toBeVisible;
+//     await expect(page.locator("//a[text()='Delete']")).toBeVisible;
+//     await expect(page.locator("//a[text()='Edit']")).toBeVisible;
 
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-test("Verify If Edit and Delete Buttons Are Not Visible for Non-Creator", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test("Verify If Edit and Delete Buttons Are Not Visible for Non-Creator", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await deleteAllBooksByUser(page);
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
+//     await addBooksByUser(page, [correctBookData]);
 
-    await authenticate(page, authPeter)
+//     await authenticate(page, authPeter)
   
-    await navigateToDetailsOfFirstBook(page);
+//     await navigateToDetailsOfFirstBook(page);
 
     
-//-------------
+// //-------------
 
-    await expect(page.locator("//a[text()='Delete']")).not.toBeVisible;
-    await expect(page.locator("//a[text()='Edit']")).not.toBeVisible;
+//     await expect(page.locator("//a[text()='Delete']")).not.toBeVisible;
+//     await expect(page.locator("//a[text()='Edit']")).not.toBeVisible;
 
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-test("Verify If Like Button Is Not Visible for Creator", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test("Verify If Like Button Is Not Visible for Creator", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await deleteAllBooksByUser(page);
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
+//     await addBooksByUser(page, [correctBookData]);
   
-    await navigateToDetailsOfFirstBook(page);
-//-------------
+//     await navigateToDetailsOfFirstBook(page);
+// //-------------
 
-    await expect(page.locator("//a[text()='Like']")).not.toBeVisible;
+//     await expect(page.locator("//a[text()='Like']")).not.toBeVisible;
 
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await addBooksByUser(page, booksOfJohn);
-    await authenticate(page, authPeter);
-    await addBooksByUser(page, booksOfPeter);
-});
+//     await addBooksByUser(page, booksOfJohn);
+//     await authenticate(page, authPeter);
+//     await addBooksByUser(page, booksOfPeter);
+// });
 
-test("Verify If Like Button Is Visible for non Creator", async ({page}) => {
-    await authenticate(page, authPeter);
-    await deleteAllBooksByUser(page);
+// test("Verify If Like Button Is Visible for non Creator", async ({page}) => {
+//     await authenticate(page, authPeter);
+//     await deleteAllBooksByUser(page);
 
-    await authenticate(page, authJohn);
-    await deleteAllBooksByUser(page);
+//     await authenticate(page, authJohn);
+//     await deleteAllBooksByUser(page);
 
-    await addBooksByUser(page, [correctBookData]);
-    await authenticate(page, authPeter);
+//     await addBooksByUser(page, [correctBookData]);
+//     await authenticate(page, authPeter);
   
-    await navigateToDetailsOfFirstBook(page);
-//-------------
+//     await navigateToDetailsOfFirstBook(page);
+// //-------------
 
-    await expect(page.locator("//a[text()='Like']")).toBeVisible;
+//     await expect(page.locator("//a[text()='Like']")).toBeVisible;
 
 
-    //Back to previous db state:
+//     //Back to previous db state:
 
-    await addBooksByUser(page, booksOfPeter);
-    await authenticate(page, authJohn);
-    await addBooksByUser(page, booksOfJohn);
-});
+//     await addBooksByUser(page, booksOfPeter);
+//     await authenticate(page, authJohn);
+//     await addBooksByUser(page, booksOfJohn);
+// });

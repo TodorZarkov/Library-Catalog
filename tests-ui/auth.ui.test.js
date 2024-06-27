@@ -53,12 +53,14 @@ test('Verify "AllBooks" link is visible after user login', async ({page}) =>{
 
 test('Verify "My Books" Link Is Visible after user login', async ({page}) => {
     await authenticate(page);
+    await page.waitForURL(host + "/catalog")
     const isVisible = await isElementVisible(page,'a[href="/profile"]')
     expect(isVisible).toBe(true);
 } );
 
 test('Verify "Create Book" Link Is Visible after user login', async ({page}) => {
     await authenticate(page);
+    await page.waitForURL(host + "/catalog")
     const isVisible = await isElementVisible(page,'a[href="/create"]')
     expect(isVisible).toBe(true);
 } );
@@ -74,6 +76,7 @@ test('Verify User\'s Email Address Is Visible after user login', async ({page}) 
 
 test('Login with Valid Credentials', async ({page}) => {
     await authenticate(page, authValid);
+    await page.waitForURL(host + "/catalog")
     await page.$('a[href="/catalog"]');
     expect(page.url()).toBe(host + "/catalog");
 });
@@ -104,6 +107,7 @@ test('Login with empty password and valid username Credentials', async ({page}) 
 
 test('Register with Valid data', async ({page}) => {
     await register(page, regDataValid);
+    await page.waitForURL(host + "/catalog")
     await page.$('a[href="/catalog"]');
     expect(page.url()).toBe(host + "/catalog");
 });

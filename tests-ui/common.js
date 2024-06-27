@@ -186,6 +186,7 @@ export async function addBooksByUser(page, books) {
 
     for(let i = 0; i < books.length; i++){
         await page.click('a[href="/create"]');
+        await page.waitForURL(host + "/create")
         await page.waitForSelector('#create-form');
         await fillAndConfirmAddBookForm(page, books[i]);
         await page.waitForURL(host + "/catalog");
