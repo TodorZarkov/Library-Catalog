@@ -1,5 +1,7 @@
-export let settings = {
-    host: 'https://library-catalog-api-tz.onrender.com',
+import * as config from '../../config.js'
+
+export const settings = {
+    host: config.apiHost
 };
 
 async function request(url, options) {
