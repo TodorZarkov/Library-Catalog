@@ -26,6 +26,8 @@ jobs:
     run: npm run start-fe &
   - name: Start api testing
     run: npm run test-api
+  - name: Install browsers
+    run: npx playwright install
   - name: Start UI testing
     run: npm run test-ui
     
