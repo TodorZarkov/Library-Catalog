@@ -1,0 +1,30 @@
+name: Build and Test
+on:
+ pull_request: 
+  branches: ["maing"]
+ workflow_dispatch:
+
+jobs:
+ build-and-test-locally:
+  runs-on: ubuntu-latest
+
+  steps:
+  - name: Copy the sorce code
+    uses: actions/checkout@v4
+  - name: Use Node.js 20.x
+    uses: actions/setup-node@v4
+    with:
+     node-version: 20.x
+     cache: 'npm'
+  - name: Npm security - start audit
+    run: npm run test-npm-sec
+  - name: Start BE locally
+    run: npm run start-be &
+  - name: Start FE locally
+    run: npm run start-fe &
+  - name: Start api testing
+    run: npm run test-api
+  - name: Start UI testing
+    run: npm run test-ui
+    
+  
